@@ -3,7 +3,7 @@ require 'csv'
 require 'rushover'
 require 'json'
 
-settings = JSON.parse(File.read('config.json'))
+settings = JSON.parse(File.read('/home/pi/tailmail/config.json'))
 
 port = 30003 # dump1090 offers CSV data on this port
 
@@ -29,8 +29,8 @@ while line = socket.gets
     time = Time.now
     if aircraft[icao].nil?
       aircraft[icao] = time
-      puts "Saw #{d[:tailnumber]} (#{d[:owner]}) at #{time}."
-      client.notify(user_key, "Saw #{d[:tailnumber]} (#{d[:owner]}) at #{time}.", priority: 1, title: 'Aircraft Notification')
+      puts "Saw #{d[:tailnumber]} - #{d[:model]} (#{d[:owner]}) at #{time}."
+      client.notify(user_key, "Saw #{d[:tailnumber]} - #{d[:model]} (#{d[:owner]}) at #{time}.", priority: 1, title: 'Aircraft Notification')
     end
   end
 end
